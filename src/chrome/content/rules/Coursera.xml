@@ -1,32 +1,32 @@
 <!--	Buckets:
 		coursera.s3.amazonaws.com
+		- coursera-course-photos.s3.amazonaws.com
+		- coursera-university-assets.s3.amazonaws.com
 		spark-public.s3.amazonaws.com
+		- d1rlkby5e91r2j.cloudfront.net
+		- d2wvvaown1ul17.cloudfront.net
+		- d396qusza40orc.cloudfront.net
+		- dt5zaw6a98blc.cloudfront.net
+		- duqnjvq4jwr55.cloudfront.net
 
 
-	Breaks assessment details in Chrome:
+	Fully covered subdomains:
 
-		https://trac.torproject.org/projects/tor/ticket/7336
-
+		- accounts
+		- eventing
 -->
-<ruleset name="Coursera (buggy)" platform="firefox">
+<ruleset name="Coursera">
 
 	<target host="coursera.org"/>
 	<target host="*.coursera.org"/>
 
-	<!--	encountered cookies:
-			- ^\.
-			- ^class
-			- ^www		
-      Disabled due to https://trac.torproject.org/projects/tor/ticket/7336
-	<securecookie host="^.*\.coursera\.org$" name=".*"/>
-  -->
-
+	<securecookie host="^(.*\.)?coursera\.org$" name=".*"/>
 
 	<!--	!www !work	-->
-	<rule from="^http://coursera\.org/"
+	<rule from="^https?://coursera\.org/"
 		to="https://www.coursera.org/"/>
 
-	<rule from="^http://(class|www)\.coursera\.org/"
+	<rule from="^http://(accounts|class|eventing|www)\.coursera\.org/"
 		to="https://$1.coursera.org/"/>
 
 </ruleset>

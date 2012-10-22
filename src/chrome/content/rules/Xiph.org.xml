@@ -1,7 +1,21 @@
 <!--
 	Nonfunctional subdomains:
 
-		- downloads
+		- downloads *
+		- lists *
+
+	* Refused
+
+
+	Fully covered subdomains:
+
+		- (www.)
+		- git
+		- media
+		- people
+		- svn
+		- trac
+		- wiki
 
 -->
 <ruleset name="Xiph.org">
@@ -13,6 +27,6 @@
 	<securecookie host="^.*\.xiph\.org$" name=".*" />
 
 
-	<rule from="^http://((?:git|svn|wiki|trac|www)\.)?xiph\.org/"
+	<rule from="^http://((?:git|media|people|svn|wiki|trac|www)\.)?xiph\.org/"
 		to="https://$1xiph.org/" />
 </ruleset>

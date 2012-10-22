@@ -44,6 +44,12 @@ una red corporativa muy intrusiva:">
 <!ENTITY ssl-observatory.prefs.asn_tooltip
 "Esto obtendrá y enviará el &quot;número de Sistema Autónomo&quot; (AS) de su red. Esto nos ayudará a ubicar ataques contra HTTPS, y a determinar si tenemos observaciones desde redes en lugares como Irán o Siria donde los ataques son comparativamente más comunes.">
 
+<!ENTITY ssl-observatory.prefs.show_cert_warning
+'Show a warning when the Observatory detects a revoked certificate not caught by your browser'>
+
+<!ENTITY ssl-observatory.prefs.show_cert_warning_tooltip
+"This will check submitted certificates against known Certificate Revocation Lists. Unfortunately we cannot guarantee that we will flag every revoked certificate, but if you do see a warning there's a good chance something is wrong.">
+
 <!ENTITY ssl-observatory.prefs.done "Listo">
 
 <!ENTITY ssl-observatory.prefs.explanation 
@@ -93,3 +99,8 @@ consultó. Pase el ratón sobre las opciones para mayores detalles:">
 "Enviar y verificar certificados auto-firmados">
 <!ENTITY ssl-observatory.prefs.self_signed_tooltip
 "Esto es recomendable; los problemas de cifrado son especialmente comunes en dispositivos embebidos auto-firmados">
+
+<!ENTITY https-everywhere.ruleset-tests.status_title "HTTPS Everywhere Ruleset Tests">
+<!ENTITY https-everywhere.ruleset-tests.status_cancel_button "Cancel">
+<!ENTITY https-everywhere.ruleset-tests.status_start_button "Start">
+

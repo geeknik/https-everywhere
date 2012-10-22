@@ -3,7 +3,9 @@
 <!ENTITY ssl-observatory.popup.later "Zapytaj mnie później">
 <!ENTITY ssl-observatory.popup.no "Nie">
 
-<!ENTITY ssl-observatory.popup.text "HTTPS Everywhere może wykryć ataki na twoją przeglądarkę przez wysyłanie do ciebie certyfikatów, które otrzymujesz do &quot;SSL Observatory&quot;. Włączyć tą opcję?">
+<!ENTITY ssl-observatory.popup.text "HTTPS Everywhere może wykryć ataki
+na twoją przeglądarkę przez wysyłanie do ciebie certyfikatów, które otrzymujesz
+do &quot;SSL Observatory&quot;. Włączyć tą opcję?">
 
 <!--<!ENTITY ssl-observatory.popup.text 
 "EFF's SSL Observatory can detect attacks against HTTPS websites by collecting
@@ -18,7 +20,8 @@ to turn it on?">-->
 <!-- Observatory preferences dialog -->
 
 <!ENTITY ssl-observatory.prefs.adv_priv_opts1
-"Bezpiecznym jest używanie tej opcji, chyba że korzystasz z intruzywnej. sieci korporacyjnej.">
+"Bezpiecznym jest używanie tej opcji, chyba że korzystasz
+z intruzywnej sieci korporacyjnej.">
 
 <!ENTITY ssl-observatory.prefs.adv_priv_opts2
 "Bezpieczne, jeżeli używasz sieci korporacyjnej z ukrytymi nazwami serwerów Intranetowych.">
@@ -41,6 +44,12 @@ to turn it on?">-->
 <!ENTITY ssl-observatory.prefs.asn_tooltip
 "To pobierze i wyśle &quot;numer Autonomicznego Systemu&quot; Twojej sieci.
 To pomoże nam zlokalizować ataki na HTTPS i określić, czy mamy obserwacje sieci w miejscach takich jak Iran czy Syria, gdzie ataki są porównywalnie częste.">
+
+<!ENTITY ssl-observatory.prefs.show_cert_warning
+'Show a warning when the Observatory detects a revoked certificate not caught by your browser'>
+
+<!ENTITY ssl-observatory.prefs.show_cert_warning_tooltip
+"This will check submitted certificates against known Certificate Revocation Lists. Unfortunately we cannot guarantee that we will flag every revoked certificate, but if you do see a warning there's a good chance something is wrong.">
 
 <!ENTITY ssl-observatory.prefs.done "Gotowe">
 
@@ -85,3 +94,4 @@ Mouseover the options for further details:">-->
 "Wysyłaj i sprawdzaj samopodpisane certyfikaty">
 <!ENTITY ssl-observatory.prefs.self_signed_tooltip
 "To jest zalecane; problemy kryptograficzne są szczególnie częste w samopodpisanych urządzeniach wbudowanych.">
+

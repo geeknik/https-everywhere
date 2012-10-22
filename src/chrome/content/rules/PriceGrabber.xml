@@ -6,6 +6,8 @@
 
 		- i.pgcdn.com *
 
+		- *.pgpartner.com	(works; mismatched, CN: www.pricegrabber.com)
+
 		- pricegrabber.com subdomains:
 
 			- ^	(cert only matches www)
@@ -15,7 +17,7 @@
 	* Akamai
 
 -->
-<ruleset name="PriceGrabber">
+<ruleset name="PriceGrabber" platform="mixedcontent">
 
 	<target host="i.pgcdn.com" />
 	<target host="pricegrabber.com" />

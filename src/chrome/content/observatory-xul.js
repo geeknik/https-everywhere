@@ -27,6 +27,8 @@ function observatory_prefs_init(doc) {
     obsprefs.getBoolPref("extensions.https_everywhere._observatory.self_signed");
   document.getElementById("send-asn").checked = 
     obsprefs.getBoolPref("extensions.https_everywhere._observatory.send_asn");
+  document.getElementById("show-cert-warning").checked = 
+    obsprefs.getBoolPref("extensions.https_everywhere._observatory.show_cert_warning");
 
   // More complicated: is it anonymised by Tor?
   var obs_how = doc.getElementById("ssl-obs-how");
@@ -52,6 +54,7 @@ function observatory_prefs_init(doc) {
 // again
 function popup_done() {
   obsprefs.setBoolPref("extensions.https_everywhere._observatory.popup_shown", true);
+  obsprefs.setBoolPref("extensions.https_everywhere._observatory.clean_config", true);
   window.close();
 }
 
@@ -105,13 +108,16 @@ function recursive_set(node, attrib, value) {
     recursive_set(node.childNodes[i], attrib, value)
 }
 
-// called from the popup
 
 function set_obs_anon(val) {
   obsprefs.setBoolPref( "extensions.https_everywhere._observatory.use_custom_proxy", !val);
 }
+
+// called from the popup only
 function enable_observatory() {
   obsprefs.setBoolPref("extensions.https_everywhere._observatory.enabled", true);
+  var torbutton_avail = ssl_observatory.proxy_test_successful;
+  set_obs_anon(torbutton_avail);
 }
 
 function disable_observatory() {
@@ -131,6 +137,11 @@ function toggle_send_asn() {
   obsprefs.setBoolPref("extensions.https_everywhere._observatory.send_asn", send_asn);
   if (send_asn) ssl_observatory.setupASNWatcher()
   else          ssl_observatory.stopASNWatcher();
+}
+
+function toggle_show_cert_warning() {
+  var show_cert_warning = document.getElementById("show-cert-warning").checked;
+  obsprefs.setBoolPref("extensions.https_everywhere._observatory.show_cert_warning", show_cert_warning);  
 }
 
 function toggle_alt_roots() {

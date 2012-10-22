@@ -1,19 +1,27 @@
 <!--
 	Nonfunctional subdomains:
 
-		- download	(404)
-		- nabble	(no https)
+		- nabble	(refused)
+
+
+	Problematic subdomains:
+
+		- blog		(wordpress)
 
 -->
 <ruleset name="The Document Foundation">
 
 	<target host="documentfoundation.org" />
-	<target host="piwik.documentfoundation.org"/>
-	<target host="www.documentfoundation.org" />
+	<target host="*.documentfoundation.org" />
 
-	<rule from="^http://(?:www\.)?documentfoundation\.org/" to="https://www.documentfoundation.org/"/>
 
-	<rule from="^http://piwik\.documentfoundation\.org/" to="https://piwik.documentfoundation.org/"/>
+	<securecookie host="^(?:piwik|www)\.documentfoundation\.org$" name=".+" />
 
-	<securecookie host="^www\.documentfoundation\.org$" name=".*"/>
+
+	<rule from="^http://(?:www\.)?documentfoundation\.org/"
+		to="https://www.documentfoundation.org/" />
+
+	<rule from="^http://(download|piwik)\.documentfoundation\.org/"
+		to="https://$1.documentfoundation.org/" />
+
 </ruleset>

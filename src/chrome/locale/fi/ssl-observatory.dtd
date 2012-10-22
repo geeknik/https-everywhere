@@ -41,6 +41,12 @@ to turn it on?">-->
 <!ENTITY ssl-observatory.prefs.asn_tooltip
 "Tämä noutaa ja lähettää verkkosi autonomisen järjestelmän numerotunnuksen (ASN). Näin pystymme paikantamaan HTTPS:ään kohdistuvat hyökkäykset ja voimme selvittää, ovatko havainnot Iranin ja Syyrian kaltaisten alueiden verkoista, joissa hyökkäykset ovat yleisiä.">
 
+<!ENTITY ssl-observatory.prefs.show_cert_warning
+'Show a warning when the Observatory detects a revoked certificate not caught by your browser'>
+
+<!ENTITY ssl-observatory.prefs.show_cert_warning_tooltip
+"This will check submitted certificates against known Certificate Revocation Lists. Unfortunately we cannot guarantee that we will flag every revoked certificate, but if you do see a warning there's a good chance something is wrong.">
+
 <!ENTITY ssl-observatory.prefs.done "Valmis">
 
 <!ENTITY ssl-observatory.prefs.explanation 
@@ -84,3 +90,8 @@ Mouseover the options for further details:">-->
 "Lähetä ja tarkista sivuston itsensä allekirjoittama varmenne">
 <!ENTITY ssl-observatory.prefs.self_signed_tooltip
 "Tämä on suositeltavaa. Salaukseen liittyvät ongelmat ovat hyvin yleisiä itsensä allekirjoittaneissa sulautetuissa järjestelmissä.">
+
+<!ENTITY https-everywhere.ruleset-tests.status_title "HTTPS Everywhere Ruleset Tests">
+<!ENTITY https-everywhere.ruleset-tests.status_cancel_button "Cancel">
+<!ENTITY https-everywhere.ruleset-tests.status_start_button "Start">
+

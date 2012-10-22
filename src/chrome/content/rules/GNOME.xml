@@ -1,4 +1,7 @@
 <!--
+	For rules causing false/broken MCB, see GNOME-falsemixed.xml
+
+
 	Nonfunctional domains:
 
 		- gnome.asia subdomains:
@@ -9,33 +12,25 @@
 
 		- gnome.org subdomains:
 
-			- api **
-			- art ***
-			- download **
-			- ftp
-			- jabber ***
+			- art		(prints "ok"; self-signed, CN: CentOS-63-64-minimal)
+			- ftp		(refused)
+			- jabber **
 			- webapps **
-			- webapps2 ****
-			- www-old ***
+			- webapps2 **
 
-		- gnomejournal.org	(shows rt.gnome.org, CN: www.gnome.org)
-
-	* cert: guzheng.lyrical.net; shows empty tree)
-	** Prints "OOPS...", mismatched, CN: l10n.gnome.org
-	*** record_too_long
-	**** Prints "OOPS..."
+	* Shows empty tree, CN: guzheng.lyrical.net
+	** http reply
 
 
 	Problematic domains:
 
 		- gnome.org subdomains:
 
-			- bugzilla-attachments	(works, mismatched, CN: www.gnome.org)
-			- foundation	(works, mismatched, CN: www.gnome.org)
-			- ldap		(403, redirects to www over http, mismatched, CN: l10n.gnome.org)
-			- usability	(prints "OOPS...", mismatched, CN: l10n.gnome.org)
+			- ldap		(http reply)
+			- src		(mismatched, CN: bugzilla.gnome.org)
 
-		- (www.)gupnp.org	(mismatched, CN: www.webstreams.de)
+		- (www.)gnomejournal.org	(identical to gnome.org; mismatched, CN: bugzilla.org)
+		- (www.)gupnp.org		(mismatched, CN: www.webstreams.de)
 
 
 	Fully covered domains:
@@ -44,40 +39,104 @@
 
 			- (www.)
 			- admin
+			- api
 			- blogs
+			- bugs
 			- bugzilla
+			- bugzilla-attachments
 			- *.bugzilla-attachments
+			- build
+			- cloud
 			- developer
+			- download
+			- etherpad
 			- extensions
-			- foundation	(→ www)
+			- foundation
 			- git
+			- glade
 			- help
 			- ldap		(→ www)
 			- l10n
 			- library
 			- mail
 			- mango
-			- menubar
+			- meetbot
 			- nagios
 			- news
 			- live
 			- ostree
 			- planet
 			- people
+			- progress
 			- projects
 			- rt
-			- usability	(→ live)
+			- src		(→ git)
+			- static
+			- usability
 			- vote
 			- webstats
-			- wiki		(→ live, mismatched, CN: www.gnome.org)
+			- wiki
+			- www-old
 
-		- (www.)gupnp.org	(→ live.gnome.org)
+		- (www.)gnomejournal.org	(→ www.gnome.org)
+		- (www.)gupnp.org		(→ live.gnome.org)
+
+
+	Mixed content:
+
+		- Script on news from ajax.googleapis.com *
+
+		- css, on:
+
+			- blogs from blogs *
+			- news from fonts.googleapis.com *
+
+		- Images, on:
+
+			- blogs from $self *
+			- blogs from planet *
+			- blogs from www *
+			- git from www-old *
+			- mail from www *
+			- mail from www-old *
+			- mango from www *
+			- news from planet *
+			- news from www *
+			- news from upload.wikimedia.org *
+			- planet from blogs
+			- planet from \d.bp.blogspot.com *
+			- planet from i.minus.com *
+			- planet from \w+.files.wordpress.com *
+			- planet from s0.wp.com *
+			- projects from ^ *
+			- www from www *
+
+		- Web bug, on:
+
+			- news from planet *
+			- planet from stats.wordpress.com *
+			- projects from webstats *
+
+	* Secured by us
+
+
+	blogs and news are in a separate -falsemixed ruleset due
+	to css and script from blogs and ajax.googleapis.com.
+
+	NB: We secure all resources, and thus
+	-falsemixed should be merged for Ffx 24.
 
 -->
 <ruleset name="GNOME (partial)">
 
 	<target host="gnome.org" />
 	<target host="*.gnome.org" />
+		<!--
+			Causes false/broken MCB:
+							-->
+		<exclusion pattern="^http://(?:blog|new)s\.gnome\.org/" />
+	<target host="gnomejournal.org" />
+	<target host="www.gnomejournal.org" />
 	<target host="gupnp.org" />
 	<target host="www.gupnp.org" />
 
@@ -85,39 +144,19 @@
 	<securecookie host="^(?:.*\.)?gnome\.org$" name=".+" />
 
 
-	<rule from="^http://((?:admin|blogs|bugzilla|\w+\.bugzilla-attachments|developer|extensions|git|help|l10n|library|live|mail|mango|menubar|nagios|news|ostree|people|planet|projects|rt|vote|webstats|www)\.)?gnome\.org/"
+	<rule from="^http://((?:admin|api|blogs|bugs|bugzilla|(?:\w+\.)?bugzilla-attachments|build|cloud|developer|download|etherpad|extensions|foundation|git|glade|help|l10n|library|live|mail|mango|meetbot|nagios|news|ostree|people|planet|progress|projects|rt|static|usability|vote|webstats|wiki|www)\.)?gnome\.org/"
 		to="https://$1gnome.org/" />
 
-	<!--	Redirects as so.
-					-->
-	<rule from="^https?://bugzilla-attachments\.gnome\.org/\??$"
-		to="https://bugzilla.gnome.org/" />
-
-	<rule from="^https?://bugzilla-attachments\.gnome\.org/(\?.+)"
-		to="https://bugzilla.gnome.org/?keywords=$1" />
-
-	<rule from="^https?://bugzilla-attachments\.gnome\.org/(\w[^\?]*)(?:\?.*)?"
-		to="https://bugzilla.gnome.org/show_bug.cgi?id=$1" />
-
-	<!--	Ditto.
-				-->
-	<rule from="^https?://foundation\.gnome\.org/"
-		to="https://www.gnome.org/foundation/" />
-
-	<rule from="^https?://ldap\.gnome\.org/"
+	<rule from="^http://ldap\.gnome\.org/"
 		to="https://www.gnome.org/" />
 
-	<rule from="^https?://wiki\.gnome\.org/"
-		to="https://live.gnome.org/" />
+	<rule from="^http://src\.gnome\.org/"
+		to="https://git.gnome.org/browse/" />
 
-	<!--	Redirects as so over http.
-						-->
-	<rule from="^https?://usability\.gnome\.org/"
-		to="https://live.gnome.org/UsabilityProject" />
+	<rule from="^http://(?:www\.)?gnomejournal\.org/"
+		to="https://www.gnome.org/" />
 
-	<!--	307s as so over http.
-						-->
-	<rule from="^https?://(?:www\.)?gupnp\.org/"
+	<rule from="^http://(?:www\.)?gupnp\.org/"
 		to="https://live.gnome.org/GUPnP/" />
 
 

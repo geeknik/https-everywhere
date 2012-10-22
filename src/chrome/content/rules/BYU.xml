@@ -1,4 +1,13 @@
-<ruleset name="Brigham Young University (partial)">
+<!--
+	Nonfunctional subdomains:
+
+		- maxwellinstitute *
+		- publications.maxwellinstitute *
+
+	* Dropped
+
+-->
+<ruleset name="Brigham Young University (partial)" platform="mixedcontent">
 
 	<target host="byu.edu" />
 	<target host="*.byu.edu" />

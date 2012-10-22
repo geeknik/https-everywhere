@@ -2,10 +2,10 @@
 	Nonfunctional subdomains:
 
 		- anoncvs *
-		- bouncer *
 		- distfiles	(support varies between mirrors resolved to)
-		- packages	("Empty Page!", self-signed)
+		- mirrorstats *
 		- sources *
+		- viewcvstest *
 
 	* Times out
 
@@ -16,6 +16,7 @@
 		- ads
 		- archives
 		- blogs
+		- bouncer
 		- bugs
 		- \d+.bugs
 		- council
@@ -26,11 +27,14 @@
 		- forums
 		- forums-lb
 		- forums-web[12]
+		- games
 		- overlays
 		- git.overlays
 		- svn.overlays
+		- packages
 		- piwik
 		- planet
+		- qa-reports
 		- security
 		- sidebar
 		- store
@@ -44,7 +48,7 @@
 
 	<target host="gentoo.org" />
 	<target host="*.gentoo.org" />
-		<exclusion pattern="^http://(?:anoncvs|bouncer|distfiles|packages|sources)\." />
+		<exclusion pattern="^http://(?:anoncvs|distfiles|mirrorstats|sources|viewcvstest)\." />
 
 
 	<!--	Observed cookie subdomains:

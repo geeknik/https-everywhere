@@ -12,27 +12,41 @@
 	CDN buckets:
 
 		- s3.amazonaws.com/uploadedimages.demandmedia/
+
+		- wac.5008.edgecastcdn.net/??5008/
+
+			- www.cracked.com
+
 		- i.crackedcdn.com.edgesuite.net
 
 
 	Problematic domains:
 
+		- (www.)blogburst.com		(works; mismatched, CN: www.demandstudios.com)
+		- cracked.com			(works, expired 2012-09-02)
+		- create.demandstudios.com	(works; mismatched, CN: *.sqsp.com)
 		- photos2.demandstudios.com	(works, akamai)
 
 
 	Nonfunctional domains:
 
+		- www.cracked.com		(400; mismatched, CN: gp1.wac.edgecastcdn.net)
 		- demandmedia.com
 		- cdn-www.demandmedia.com	(503, akamai)
 		- new.demandmedia.com
 		- www.demandmedia.com		(503, akamai)
 
+
+	Fully covered domains:
+
+		- rma.demandmedia.com
+
 -->
-<ruleset name="Demand Media (partial)">
+<ruleset name="Demand Media (partial)" platform="mixedcontent">
 
 	<!--	*img.net/:	Akamai
 				-->
-	<target host="vs.demandmedia.com" />
+	<target host="*.demandmedia.com" />
 	<target host="demandstudios.com" />
 	<target host="*.demandstudios.com" />
 	<target host="*.dmtracker.com" />
@@ -53,11 +67,11 @@
 	<securecookie host="^.*\.dmtracker\.com$" name=".+" />
 	<securecookie host="^www\.golflink\.com$" name=".+" />
 	<securecookie host="^(?:.*\.)?greencar\.com$" name=".+" />
-	<securecookie host="^(?:.*\.)?livestrong\.org$" name=".+" />
+	<securecookie host="^(?:.*\.)?livestrong\.com$" name=".+" />
 
 
-	<rule from="^http://vs\.demandmedia\.com/"
-		to="https://vs.demandmedia.com/" />
+	<rule from="^http://(rma|vs)\.demandmedia\.com/"
+		to="https://$1.demandmedia.com/" />
 
 	<rule from="^http://((?:cdn-)?(?:staging|www)\.)?demandstudios\.com/"
 		to="https://$1demandstudios.com/" />

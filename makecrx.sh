@@ -37,7 +37,7 @@ VERSION=`python -c "import json ; print(json.loads(open('chromium/manifest.json'
 echo "Building chrome version" $VERSION
 
 if [ -f utils/trivial-validate.py ]; then
-	VALIDATE="python utils/trivial-validate.py --ignoredups google --ignoredups facebook"
+	VALIDATE="./utils/trivial-validate.py --ignoredups google --ignoredups facebook"
 elif [ -x utils/trivial-validate ] ; then
   # This case probably never happens
 	VALIDATE=./utils/trivial-validate
@@ -56,7 +56,8 @@ fi
 
 if [ -f utils/relaxng.xml -a -x "$(which xmllint)" ] >&2
 then
-  if xmllint --noout --relaxng utils/relaxng.xml src/chrome/content/rules/*.xml
+  # Use find and xargs to avoid "too many args" error on Mac OS X
+  if find src/chrome/content/rules/ -name "*.xml" | xargs xmllint --noout --relaxng utils/relaxng.xml
   then
     echo Validation of rulesets with RELAX NG grammar completed. >&2
   else
@@ -78,9 +79,8 @@ do_not_ship="*.py *.xml icon.jpg"
 rm -f $do_not_ship
 cd ../..
 
-python ./utils/merge-rulesets.py
+. ./utils/merge-rulesets.sh || exit 1
 
-export RULESETS=chrome/content/rules/default.rulesets
 cp src/$RULESETS pkg/crx/rules/default.rulesets
 
 echo 'var rule_list = [' > pkg/crx/rule_list.js
@@ -116,7 +116,8 @@ trap 'rm -f "$pub" "$sig" "$zip"' EXIT
 
 # zip up the crx dir
 cwd=$(pwd -P)
-(cd "$dir" && zip -qr -9 -X "$cwd/$zip" .)
+(cd "$dir" && ../../utils/create_xpi.py -n "$cwd/$zip" -x "../../.build_exclusions" .)
+echo >&2 "Unsigned package has shasum: `shasum "$cwd/$zip"`" 
 
 # signature
 openssl sha1 -sha1 -binary -sign "$key" < "$zip" > "$sig"
@@ -134,7 +135,7 @@ version_hex="0200 0000" # 2
 pub_len_hex=$(byte_swap $(printf '%08x\n' $(ls -l "$pub" | awk '{print $5}')))
 sig_len_hex=$(byte_swap $(printf '%08x\n' $(ls -l "$sig" | awk '{print $5}')))
 (
-  echo "$crmagic_hex $version_hex $pub_len_hex $sig_len_hex" | xxd -r -p
+  echo "$crmagic_hex $version_hex $pub_len_hex $sig_len_hex" | sed -e 's/\s//g' -e 's/\([0-9A-F]\{2\}\)/\\\\\\x\1/gI' | xargs printf
   cat "$pub" "$sig" "$zip"
 ) > "$crx"
 #rm -rf pkg/crx

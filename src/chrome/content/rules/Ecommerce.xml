@@ -1,10 +1,15 @@
 <!--
+	Other Ecommerce rulesets:
+
+		- Hesecure.com.xml
+
+
 	Nonfunctional domains:
 
 		- status.ixwebhosting.com
 
 -->
-<ruleset name="Ecommerce (partial)">
+<ruleset name="Ecommerce (partial)" platform="mixedcontent">
 
 	<target host="ecommerce.com" />
 	<target host="www.ecommerce.com" />

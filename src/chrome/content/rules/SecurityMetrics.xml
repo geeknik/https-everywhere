@@ -1,13 +1,17 @@
+<!--
+	Server is configured for rc4 only.
+
+-->
 <ruleset name="SecurityMetrics">
 
 	<target host="securitymetrics.com" />
 	<target host="*.securitymetrics.com" />
 
 
-	<securecookie host="^(?:www\.)?securitymetrics\.com$" name=".+" />
+	<securecookie host="^(?:web2\.|www\.)?securitymetrics\.com$" name=".+" />
 
 
-	<rule from="^http://(www\.)?securitymetrics\.com/"
+	<rule from="^http://(web2\.|www\.)?securitymetrics\.com/"
 		to="https://$1securitymetrics.com/" />
 
 	<rule from="^http://blog\.securitymetrics\.com/favicon\.ico"

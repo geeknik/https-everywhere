@@ -1,50 +1,55 @@
 <!--
 	Nonfunctional subdomains:
 
-		- albiero
-		- download *
-		- ganesh *
-		- get
-		- git
-		- mailman
-		- people
-		- rsync *
-		- sirius **
-		- stats *
-		- update
-		- www2 **
+		- albiero *
+		- download **
+		- ganesh **
+		- people *
+		- rsync **
+		- sirius ***
+		- stats **
+		- update **
+		- www2 ***
 
-	* Shows www
-	** Images 404
+	* Refused
+	** Shows www
+	*** Images 404
+
+
+	Problematic subdomains:
+
+		- addons	(mismatched, CN: *.opendesktop.org)
 
 
 	Fully covered subdomains:
 
 		- (www.)
 		- forum
+		- get
+		- git
 		- images
 		- images1
+		- mailman
 		- trac
 		- wiki
 		- www1
 
 
-	Targets solely for wildcard cookies:
+	Wildcard cookies:
 
-		- *.forum.videolan.org
+		- .forum.videolan.org
 
 -->
 <ruleset name="VideoLAN (partial)">
 
 	<target host="videolan.org" />
 	<target host="*.videolan.org" />
-	<target host="*.forum.videolan.org" />
 
 
 	<securecookie host="(?:.*\.)?videolan\.org$" name=".+" />
 
 
-	<rule from="^http://((?:forum|images1?|trac|wiki|www1?)\.)?videolan\.org/"
+	<rule from="^http://((?:forum|get|git|images1?|mailman|trac|wiki|www1?)\.)?videolan\.org/"
 		to="https://$1videolan.org/" />
 
 	<!--	- Show www's data over https

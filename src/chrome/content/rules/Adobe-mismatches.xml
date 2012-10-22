@@ -2,13 +2,14 @@
 	For rules that are on by default, see Adobe.xml.
 
 -->
-<ruleset name="Adobe (mismatches)" default_off="mismatch">
+<ruleset name="Adobe (mismatches)" default_off="mismatched">
 
-	<!--	Cert: www.adobe.com	-->
-	<target host="helpx.adobe.com" />
+	<target host="airdownload.adobe.com" />
+	<target host="gaming.adobe.com" />
+	<target host="html.adobe.com" />
 
 
-	<rule from="^http://helpx\.adobe\.com/"
-		to="https://helpx.adobe.com/" />
+	<rule from="^http://(airdownload|gaming|html)\.adobe\.com/"
+		to="https://$1.adobe.com/" />
 
 </ruleset>

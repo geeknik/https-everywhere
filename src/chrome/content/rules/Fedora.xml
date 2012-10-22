@@ -1,40 +1,92 @@
 <!--
+	For problematic rules, see Fedora_Project-problematic.xml.
+
+
+	Other Fedora Project rulesets:
+
+		- Fedora_Hosted.org.xml
+
+
 	Nonfunctional domains:
 
-		- git.fedorahosted.org		(CN: fedorahosted.org; redirects there & 404s)
 		- \w+.fedorapeople.org		(unique domain per person)
 
 		- fedoraproject.org subdomains:
 
-			- directory *
-			- pki *
-			- planet
-			- publictest04
+			- directory ¹
+			- infrastructure ²
+			- kojipkgs ²
+			- ols ³
+			- pki ¹
+			- planet ³
+			- publictest04 ³
+			- torrent ³
 
-	* Redirects to www.aeolusproject.org; mismatched, CN: *.aeolusproject.org
+	¹ Redirects to www.aeolusproject.org; mismatched, CN: *.aeolusproject.org
+	² Dropped
+	³ Refused
 
 
 	Problematic domains:
 
-		- www.fedorahosted.org		(mismatched)
+		- pkgs.fedoraproject.org	(works, self-signed)
+		- koji.fedoraproject.org	(works mostly, self-signed)
+
+
+	Fully covered domains:
+
+		- fedoraproject.org subdomains:
+
+			- (www.)
+			- admin
+			- alt
+			- apps
+			- archives
+			- ask
+			- badges
+			- blogs
+			- boot
+			- dl
+			- docs
+			- download
+			- get
+			- join
+			- lists
+			- meetbot
+			- mirrors
+			- paste
+			- retrace
+			- spins
+			- start
+			- talk		
+
+
+	Mixed content:
+
+		- css on start from ^ ¹
+
+		- Images, on:
+
+			- badges from infrastructure ²
+			- badges from cdn.libravatar.org ³
+			- start from ^ ³
+			- start from www ³
+
+	¹ Secured by us, seems to affect printing only
+	² Unsecurable, doesn't trip MCB
+	³ Secured by us
 
 -->
 <ruleset name="Fedora Project">
 
-	<target host="fedorahosted.org" />
-	<target host="www.fedorahosted.org" />
 	<target host="fedoraproject.org" />
 	<target host="*.fedoraproject.org" />
 
 
-	<securecookie host="^fedorahosted\.org$" name=".+" />
 	<securecookie host="^(?:.*\.)?fedoraproject\.org$" name=".+" />
 
 
-	<rule from="^https?://(?:www\.)?fedorahosted\.org/"
-		to="https://fedorahosted.org/" />
-
-	<rule from="^http://((?:admin|alt|archives|blogs|boot|dl|docs|download|get|join|lists|meetbot|mirrors|spins|start|talk|www)\.)?fedoraproject\.org/"
+	<rule from="^http://((?:admin|alt|apps|archives|ask|badges|blogs|boot|dl|docs|download|get|join|lists|meetbot|mirrors|paste|retrace|spins|start|talk|www)\.)?fedoraproject\.org/"
 		to="https://$1fedoraproject.org/" />
 
 </ruleset>

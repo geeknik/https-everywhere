@@ -45,6 +45,12 @@ Opcija, kas iespējota šādā tīklā, varētu publicēt pierādījumus tam, ku
 "Darbība nolasīs un nosūtīs jūsu tīkla &quot;Autonomo sistēmas numuru&quot;. 
 Tas palīdzēs mums noteikt uzbrukumus pret HTTPS, un atklāt vai no tīkliem tiek veikta pārraudzība tādās valstīs kā Irāna un Sīrija, kur uzbrukumi notiek salīdzinoši bieži.">
 
+<!ENTITY ssl-observatory.prefs.show_cert_warning
+'Show a warning when the Observatory detects a revoked certificate not caught by your browser'>
+
+<!ENTITY ssl-observatory.prefs.show_cert_warning_tooltip
+"This will check submitted certificates against known Certificate Revocation Lists. Unfortunately we cannot guarantee that we will flag every revoked certificate, but if you do see a warning there's a good chance something is wrong.">
+
 <!ENTITY ssl-observatory.prefs.done "Gatavs">
 
 <!ENTITY ssl-observatory.prefs.explanation 
@@ -79,7 +85,7 @@ Mouseover the options for further details:">-->
 
 <!ENTITY ssl-observatory.prefs.show "Parādīt papildu opcijas">
 
-<!ENTITY ssl-observatory.prefs.title "Observatory SSL izvēlnes">
+<!ENTITY ssl-observatory.prefs.title "Observatory SSL preferences">
 
 <!ENTITY ssl-observatory.prefs.use "Izmantot Observatory?">
 <!ENTITY ssl-observatory.warning.title "EFF's Observatory SSL BRĪDINĀJUMS">
@@ -92,3 +98,8 @@ Mouseover the options for further details:">-->
 "Iesniegt un pārbaudīt pašparakstītus sertifikātus">
 <!ENTITY ssl-observatory.prefs.self_signed_tooltip
 "Tiek rekomendēts; ar šifrēšanu saistītas problēmas ir īpaši biežas iegultās, pašparakstošās iekārtās">
+
+<!ENTITY https-everywhere.ruleset-tests.status_title "HTTPS Everywhere Ruleset Tests">
+<!ENTITY https-everywhere.ruleset-tests.status_cancel_button "Cancel">
+<!ENTITY https-everywhere.ruleset-tests.status_start_button "Start">
+

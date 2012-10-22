@@ -17,12 +17,20 @@
 		- media.nationaljournal.com	(ditto)
 		- www.theatlantic.com		(cert: ssl.theatlantic.com)
 		- advertising.theatlantic.com	(ditto)
-		- cdn.theatlantic.com		(cert: gp1.wac.edgecastcdn.net)
 
 
 	Problematic domains:
 
 		- cdn.theatlanticcities.com	(cert: gp1.wac.edgecastcdn.net; 404)
+		- ssl.theatlantic.com		(some images 404)
+		- assets.theatlantic.com	(self-signed)
+
+
+	Fully covered domains:
+
+		- cdn.theatlantic.com
+		- ssl.theatlantic.com		(→ cdn.theatlantic.com)
+		- assets.theatlantic.com	(→ cdn.theatlantic.com)
 
 -->
 <ruleset name="Atlantic Media (partial)">
@@ -30,7 +38,7 @@
 	<target host="govexec.com" />
 	<target host="*.govexec.com" />
 	<target host="secure.nationaljournal.com" />
-	<target host="ssl.theatlantic.com" />
+	<target host="*.theatlantic.com" />
 	<target host="*.theatlanticcities.com" />
 	<target host="admin.theatlanticwire.com" />
 
@@ -49,8 +57,10 @@
 	<rule from="^http://secure\.nationaljournal\.com/"
 		to="https://secure.nationaljournal.com/" />
 
-	<rule from="^http://ssl\.theatlantic\.com/"
-		to="https://ssl.theatlantic.com/" />
+	<!-- not 100% sure about this, but it's the
+		  least broken configuration I can find -->
+	<rule from="^http://(?:assets|cdn|ssl)\.theatlantic\.com/"
+		to="https://cdn.theatlantic.com/" />
 
 	<rule from="^http://admin\.theatlantic(cities|wire)\.com/"
 		to="https://admin.theatlantic$1.com/" />

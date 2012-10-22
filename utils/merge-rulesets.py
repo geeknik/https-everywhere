@@ -14,9 +14,20 @@ from subprocess import call
 import sys
 import traceback
 import re
+import unicodedata
+
+
+def normalize(f):
+    """
+    OSX and Linux filesystems encode composite characters differently in filenames.
+    We should normalize to NFC: http://unicode.org/reports/tr15/.
+    """
+    f = unicodedata.normalize('NFC', unicode(f, 'utf-8')).encode('utf-8')
+    return f
 
 os.chdir("src")
 rulesets_fn="chrome/content/rules/default.rulesets"
+xml_ruleset_files = map(normalize, glob("chrome/content/rules/*.xml"))
 
 # cleanup after bugs :/
 misfile = rulesets_fn + "r"
@@ -24,16 +35,34 @@ if os.path.exists(misfile):
   print("Cleaning up malformed rulesets file...")
   os.unlink(misfile)
 
+if "--fast" in sys.argv:
+  library_compiled_time = os.path.getmtime(rulesets_fn)
+  newest_xml = max([os.path.getmtime(f) for f in xml_ruleset_files])
+  if library_compiled_time >= newest_xml:
+    print("Library is newer that all rulesets, skipping rebuild...")
+    sys.exit(0)
+
 print("Creating ruleset library...")
 
 # Under git bash, sed -i issues errors and sets the file "read only".  Thanks.
 if os.path.isfile(rulesets_fn):
   os.system("chmod u+w " + rulesets_fn)
 
-library = open(rulesets_fn,"w")
+def rulesize():
+  return len(open(rulesets_fn).read())
 
-# XXX TODO replace all sed commands with native Python
-#strip_oneline_comment = re.compile(r"<!--.*?-->")
+def clean_up(rulefile):
+    """Remove extra whitespace and comments from a ruleset"""
+    comment_and_newline_pattern = re.compile(r"<!--.*?-->|\n|\r", flags=re.DOTALL)
+    rulefile = comment_and_newline_pattern.sub('', rulefile)
+    to_and_from_pattern = re.compile(r'\s*(to=|from=)')
+    rulefile = to_and_from_pattern.sub(r' \1', rulefile)
+    rulefile = re.sub(r">\s*<", r"><", rulefile)
+    rulefile = re.sub(r"</ruleset>\s*", r"</ruleset>\n", rulefile)
+    rulefile = re.sub(r"\s*(/>|<ruleset)", r"\1", rulefile)
+    return rulefile
+
+library = open(rulesets_fn,"w")
 
 try:
   commit_id = os.environ["GIT_COMMIT_ID"]
@@ -43,25 +72,15 @@ except:
   library.write('<rulesetlibrary>')
 
 # Include the filename.xml as the "f" attribute
-for rfile in sorted(glob("chrome/content/rules/*.xml")):
-  ruleset = open(rfile).read()
-  fn=os.path.basename(rfile)
-  ruleset = ruleset.replace("<ruleset", '<ruleset f="%s"' % fn, 1)
-  library.write(ruleset)
-library.write("</rulesetlibrary>\n")
-library.close()
-
 print("Removing whitespaces and comments...")
 
-def rulesize():
-  return len(open(rulesets_fn).read())
-
-crush = rulesize()
-sedcmd = ["sed", "-i", "-e", ":a", "-re"]
-call(sedcmd + [r"s/<!--.*?-->//g;/<!--/N;//ba", rulesets_fn])
-call(["sed", "-i", r":a;N;$!ba;s/\n//g;s/>[ 	]*</></g;s/[ 	]*to=/ to=/g;s/[ 	]*from=/ from=/g;s/ \/>/\/>/g", rulesets_fn])
-call(["sed", "-i", r"s/<\/ruleset>/<\/ruleset>\n/g", rulesets_fn])
-print("Crushed", crush, "bytes of rulesets into", rulesize())
+for rfile in sorted(xml_ruleset_files):
+  ruleset = open(rfile).read()
+  fn = os.path.basename(rfile)
+  ruleset = ruleset.replace("<ruleset", '<ruleset f="%s"' % fn, 1)
+  library.write(clean_up(ruleset))
+library.write("</rulesetlibrary>\n")
+library.close()
 
 try:
   if 0 == call(["xmllint", "--noout", rulesets_fn]):
@@ -76,5 +95,5 @@ except OSError as e:
 
 # We make default.rulesets at build time, but it shouldn't have a variable
 # timestamp
-call(["touch", "-r", "chrome/content/rules", rulesets_fn])
+call(["touch", "-r", "install.rdf", rulesets_fn])
 

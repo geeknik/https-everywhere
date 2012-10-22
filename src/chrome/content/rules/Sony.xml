@@ -1,10 +1,13 @@
 <!--
 	Other Sony rulesets:
 
+		- Naughty_Dog.xml
 		- PlayStation.xml
 		- Sony.se.xml
 		- Sony_Computer_Science_Laboratories.xml
+		- Sony_Entertainment_Network.xml
 		- Sony-europe.com.xml
+		- Sony_Latin_America.xml
 		- SonyMobile.xml
 		- SonyMusic.xml
 		- Sony_Pictures_UK.xml
@@ -22,8 +25,14 @@
 
 	Nonfunctional domains:
 
+		- (www.)imageworks.com *
+		- opensource.imageworks.com *
 		- esupport.sony.com		(redirects to s01.esupport, which has different data)
 		- www.kb.sony.com
+		- sonypictures.com		(times out)
+		- www.sonypictures.com *
+
+	* Refused
 
 
 	Partially covered domains:
@@ -38,7 +47,7 @@
 		- blog.sony.com
 
 -->
-<ruleset name="Sony (partial)">
+<ruleset name="Sony (partial)" platform="mixedcontent">
 
 	<target host="webassets.scea.com" />
 	<target host="*.webassets.scea.com" />
@@ -47,13 +56,10 @@
 	<target host="s01.esupport.sony.com" />
 	<target host="sony.co.uk" />
 	<target host="*.sony.co.uk" />
-	<target host="sonyentertainmentnetwork.com" />
-	<target host="*.sonyentertainmentnetwork.com" />
 
 
 	<securecookie host="^.*\.sony\.com$" name=".*" />
 	<securecookie host="^outlet\.sony\.co\.uk$" name=".+" />
-	<securecookie host="^.*\.sonyentertainmentnetwork\.com$" name=".*" />
 
 
 	<!--	- Cert doesn't match
@@ -78,14 +84,5 @@
 
 	<rule from="^http://(blog|s01\.esupport|store)\.sony\.com/"
 		to="https://$1.sony.com/" />
-
-	<rule from="^http://((?:account|www)\.)?sonyentertainmentnetwork\.com/"
-		to="https://$1sonyentertainmentnetwork.com/" />
-
-	<!--	- Cert: *.hs.llnwd.net
-		- Shows blank page
-					-->
-	<rule from="^https?://cdn\.sonyentertainmentnetwork\.com/"
-		to="https://www.sonyentertainmentnetwork.com/" />
 
 </ruleset>

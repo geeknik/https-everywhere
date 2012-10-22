@@ -1,16 +1,17 @@
 <!--
 	CDN buckets:
 
+		- nebula-static.s3.amazonaws.com
 		- nebula-www.s3.amazonaws.com
 
 -->
 <ruleset name="Nebula">
 
 	<target host="nebula.com" />
-	<target host="www.nebula.com" />
+	<target host="*.nebula.com" />
 
 
-	<securecookie host="^www\.nebula\.com$" name=".+" />
+	<securecookie host="^(?:www)?\.nebula\.com$" name=".+" />
 
 
 	<rule from="^http://(www\.)?nebula\.com/"

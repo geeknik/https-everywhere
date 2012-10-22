@@ -1,14 +1,25 @@
 <!--
-	At least some pages redirect to http.
+	At least some pages redirect to http via JS
+
+
+	Mixed content:
+
+		- Images on www from www *
+
+	* Secured by us
 
 -->
 <ruleset name="Oculus VR (partial)">
 
 	<target host="oculusvr.com" />
-	<target host="www.oculusvr.com" />
+	<target host="*.oculusvr.com" />
+		<exclusion pattern="^http://(?:www\.)?oculusvr\.com/(?!_core/|pre-order|wp-content/|wp-includes/)" />
 
 
-	<rule from="^http://(www\.)?oculusvr\.com/(pre-order|wp-content/)"
-		to="https://$1oculusvr.com/$2" />
+	<securecookie host="^(?:careers|developer)\.oculusvr\.com$" name=".+" />
+
+
+	<rule from="^http://((?:careers|developer|www)\.)?oculusvr\.com/"
+		to="https://$1oculusvr.com/" />
 
 </ruleset>
