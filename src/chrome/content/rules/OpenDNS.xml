@@ -11,6 +11,7 @@
   <exclusion pattern="^http://feeds\.opendns\.com/" />
   <exclusion pattern="^http://malware\.opendns\.com/" />	
   <exclusion pattern="^http://info\.opendns\.com/" />
+  <exclusion pattern="^http://blog\.opendns\.com/" />
 
   <rule from="^http://(?:www\.)?opendns\.com/" to="https://www.opendns.com/"/>
   <rule from="^http://([^/:@\.]+)\.opendns\.com/" to="https://$1.opendns.com/"/>
