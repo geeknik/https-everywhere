@@ -1,0 +1,22 @@
+<!--
+	For other Mail.ru coverage, see Mail.ru.xml.
+
+
+	(www.) doesn't exist.
+
+
+	Data on l?img also exist on img.mail.ru.
+
+-->
+<ruleset name="imgs Mail.ru">
+
+	<target host="*.imgsmail.ru" />
+
+
+	<rule from="^http://(auto|cars|img|limg)\.imgsmail\.ru/"
+		to="https://$1.imgsmail.ru/" />
+
+	<rule from="^http://go\.imgsmail\.ru/"
+		to="https://go.imgsmail.ru/" />
+
+</ruleset>
